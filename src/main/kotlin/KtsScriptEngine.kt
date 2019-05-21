@@ -5,7 +5,7 @@ import javax.script.ScriptEngine
 import javax.script.ScriptEngineManager
 import kotlin.reflect.KClass
 
-class KtsScriptEngin private constructor(scriptEngine: ScriptEngine): ScriptEngine by scriptEngine{
+class KtsScriptEngine private constructor(scriptEngine: ScriptEngine): ScriptEngine by scriptEngine{
     fun loadClass(path: String): KClass<*> {
         val code = File(path).readText()
         val className = Regex("class ([a-zA-Z]*)").find(code)?.groupValues?.get(1)
@@ -18,7 +18,7 @@ class KtsScriptEngin private constructor(scriptEngine: ScriptEngine): ScriptEngi
     }
 
     companion object {
-        fun create(jarPath: String): KtsScriptEngin {
+        fun create(jarPath: String): KtsScriptEngine {
             val file = File(jarPath)
             val url = file.toURI().toURL()
             val classLoader = ClassLoader.getSystemClassLoader() as URLClassLoader
@@ -26,9 +26,9 @@ class KtsScriptEngin private constructor(scriptEngine: ScriptEngine): ScriptEngi
             method.isAccessible = true
             method.invoke(classLoader, url)
 
-            val scriptEngin = ScriptEngineManager(classLoader).getEngineByExtension("kts")
+            val scriptEngine = ScriptEngineManager(classLoader).getEngineByExtension("kts")
 
-            return KtsScriptEngin(scriptEngin)
+            return KtsScriptEngine(scriptEngine)
         }
     }
 }
