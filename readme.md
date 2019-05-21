@@ -18,7 +18,7 @@ data class Fuga(
 
 生成されるTableオブジェクト
 
-```
+```HogeTable.kt
 import kotlin.Int
 import org.jetbrains.exposed.dao.EntityID
 import org.jetbrains.exposed.dao.IntIdTable
@@ -31,7 +31,7 @@ object HogeTable : IntIdTable() {
 }
 ```
 
-```
+```FugaTable.kt
 import kotlin.Int
 import org.jetbrains.exposed.dao.IntIdTable
 import org.jetbrains.exposed.sql.Column
